@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('phone', 20);
             $table->string('token');
             $table->integer('max_requests')->default(5000);
-            $table->boolean('enabled')->default(true);
+            $table->boolean('enabled')->default(1);
             $table->timestamps();
         });
     }

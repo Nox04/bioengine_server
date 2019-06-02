@@ -16,6 +16,7 @@ class CreateBiometricOperationsTable extends Migration
         Schema::create('biometric_operations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->enum('type', config('engine.operation_types'));
+            $table->string('ip');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
