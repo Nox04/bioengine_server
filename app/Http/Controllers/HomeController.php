@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Presets\Response;
+use App\Http\Presets\Status;
 
 class HomeController extends BaseController
 {
     public function index()
     {
         return response()->json(
-            ['status' => 'failed'],
-            $this->getResponseStatus('forbidden'),
+            Response::UNAUTHORIZED,
+            Status::FORBIDDEN,
             $this->getHeaders()
         );
     }

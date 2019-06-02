@@ -1,13 +1,8 @@
 <?php
 
-namespace App\Http;
+namespace App\Http\Presets;
 
-/**
- * @method static self SUCCESS()
- * @method static self BAD_REQUEST()
- * @method static self UNAUTHORIZED()
- */
-class Status extends Enum
+class Status
 {
     public const SUCCESS = 200;
     public const BAD_REQUEST = 400;

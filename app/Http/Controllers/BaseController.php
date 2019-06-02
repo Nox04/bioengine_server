@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Status;
 use Laravel\Lumen\Routing\Controller;
 
 
