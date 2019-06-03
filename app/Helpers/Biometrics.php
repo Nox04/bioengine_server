@@ -13,7 +13,7 @@ class Biometrics
             storage_path().'/app/',
             'match',
             $document,
-            storage_path().'/app/cache/$document.bmp',
+            storage_path().'/app/cache/'.$document.'.bmp',
         ]);
 
         $process->run();
@@ -27,7 +27,7 @@ class Biometrics
             storage_path().'/app/',
             'enroll',
             $document,
-            storage_path().'/app/cache/$document.bmp',
+            storage_path().'/app/cache/'.$document.'.bmp',
             $position,
         ]);
 

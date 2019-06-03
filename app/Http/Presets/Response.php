@@ -21,7 +21,7 @@ class Response
         return response()->json(
             ['error' => $output],
             Status::SERVER_ERROR,
-            Headers::UTF8,
+            Headers::UTF8
         );
     }
 
@@ -30,7 +30,7 @@ class Response
         return response()->json(
             ['message' => trim(preg_replace('/\s\s+/', ' ', $output))],
             Status::SUCCESS,
-            Headers::UTF8,
+            Headers::UTF8
         );
     }
 

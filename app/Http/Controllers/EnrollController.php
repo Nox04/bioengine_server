@@ -23,8 +23,9 @@ class EnrollController extends BaseController
         $document = $request->input('document');
         Io::saveImageToCache($document, $request->input('image'));
         $process = Biometrics::enroll($document, $request->input('position'));
-        Io::deleteImageFromCache('cache/$document.bmp');
+        Io::deleteImageFromCache($document);
 
+        //Response
         if (! $process->isSuccessful())
             return Response::externalBinError($process->getOutput());
         else

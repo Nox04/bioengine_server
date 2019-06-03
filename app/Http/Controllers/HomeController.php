@@ -13,7 +13,7 @@ class HomeController extends BaseController
         return response()->json(
             Response::UNAUTHORIZED,
             Status::FORBIDDEN,
-            Headers::UTF8,
+            Headers::UTF8
         );
     }
 }

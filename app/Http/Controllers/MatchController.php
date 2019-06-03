@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Biometrics;
 use App\Helpers\Io;
+use App\Http\Presets\Response;
 use Illuminate\Http\Request;
 
 class MatchController extends BaseController
@@ -21,8 +22,9 @@ class MatchController extends BaseController
         $document = $request->input('document');
         Io::saveImageToCache($document, $request->input('image'));
         $process = Biometrics::match($document);
-        Io::deleteImageFromCache('cache/$document.bmp');
+        Io::deleteImageFromCache($document);
 
+        //Response
         if (! $process->isSuccessful())
             return Response::externalBinError($process->getOutput());
         else
