@@ -14,6 +14,12 @@
 $router->get('/', 'HomeController@index');
 
 $router->group(['middleware' => 'auth'], function () use($router) {
-    $router->post('/enroll', ['middleware' => 'auth', 'uses' => 'EnrollController@enrollToDatabase']);
-    $router->post('/match', ['middleware' => 'auth', 'uses' => 'MatchController@matchAgainstDatabase']);
+    $router->post('/enroll', [
+        'middleware' => 'auth',
+        'uses' => 'EnrollController@enrollToDatabase',
+    ]);
+    $router->post('/match', [
+        'middleware' => 'auth',
+        'uses' => 'MatchController@matchAgainstDatabase',
+    ]);
 });

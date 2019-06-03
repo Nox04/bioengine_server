@@ -15,9 +15,11 @@ class EnrollController extends BaseController
         $response = $this->validateRequest($request->all(), [
             'document'  => 'required|numeric|digits_between:6,12',
             'image'     => 'required',
-            'position' => 'required|numeric'
+            'position' => 'required|numeric',
         ]);
-        if(isset($response)) return $response;
+        if(isset($response)) {
+            return $response;
+        }
 
         //Save image to cache
         Storage::disk('local')->put(
@@ -41,7 +43,7 @@ class EnrollController extends BaseController
         Storage::delete('cache/'.$request->input('document').'.bmp');
 
         //Return error if process fail
-        if (!$process->isSuccessful()) {
+        if (! $process->isSuccessful()) {
             return response()->json(
                 ['error' => $process->getOutput()],
                 Status::SERVER_ERROR,
@@ -51,7 +53,11 @@ class EnrollController extends BaseController
 
         //Response the successful request
         return response()->json(
-            ['message' => trim(preg_replace('/\s\s+/', ' ', $process->getOutput()))],
+            ['message' => trim(preg_replace(
+                '/\s\s+/',
+                ' ',
+                $process->getOutput())),
+            ],
             Status::SUCCESS,
             $this->getHeaders()
         );
