@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Presets\Headers;
 use App\Http\Presets\Response;
 use App\Http\Presets\Status;
 
@@ -12,7 +13,7 @@ class HomeController extends BaseController
         return response()->json(
             Response::UNAUTHORIZED,
             Status::FORBIDDEN,
-            $this->getHeaders()
+            Headers::UTF8,
         );
     }
 }

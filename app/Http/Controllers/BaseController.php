@@ -8,18 +8,8 @@ use Laravel\Lumen\Routing\Controller;
 
 class BaseController extends Controller
 {
-    /**
-     * Generate the json headers
-     */
-    protected function getHeaders()
+    protected function validateRequest($data, $rules)
     {
-        return [
-            'Content-Type' => 'application/json; charset=UTF-8',
-            'charset' => 'utf-8',
-        ];
-    }
-
-    protected function validateRequest($data, $rules) {
         $validator = Validator::make($data, $rules);
 
         if ($validator->fails()) {

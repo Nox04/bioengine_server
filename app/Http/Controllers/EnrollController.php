@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Presets\Status;
+use App\Helpers\Biometrics;
+use App\Helpers\Io;
+use App\Http\Presets\Response;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Symfony\Component\Process\Process;
 
 class EnrollController extends BaseController
 {
@@ -17,49 +17,17 @@ class EnrollController extends BaseController
             'image'     => 'required',
             'position' => 'required|numeric',
         ]);
-        if(isset($response)) {
-            return $response;
-        }
+        if(isset($response)) return $response;
 
-        //Save image to cache
-        Storage::disk('local')->put(
-            'cache/'.$request->input('document').'.bmp',
-            base64_decode($request->input('image'))
-        );
+        //External processing
+        $document = $request->input('document');
+        Io::saveImageToCache($document, $request->input('image'));
+        $process = Biometrics::enroll($document, $request->input('position'));
+        Io::deleteImageFromCache('cache/$document.bmp');
 
-        //Process the request on java
-        $process = new Process([
-            storage_path().'/app/run.sh',
-            storage_path().'/app/',
-            'enroll',
-            $request->input('document'),
-            storage_path().'/app/cache/'.$request->input('document').'.bmp',
-            $request->input('position'),
-        ]);
-
-        $process->run();
-
-        //Clean cache
-        Storage::delete('cache/'.$request->input('document').'.bmp');
-
-        //Return error if process fail
-        if (! $process->isSuccessful()) {
-            return response()->json(
-                ['error' => $process->getOutput()],
-                Status::SERVER_ERROR,
-                $this->getHeaders()
-            );
-        }
-
-        //Response the successful request
-        return response()->json(
-            ['message' => trim(preg_replace(
-                '/\s\s+/',
-                ' ',
-                $process->getOutput())),
-            ],
-            Status::SUCCESS,
-            $this->getHeaders()
-        );
+        if (! $process->isSuccessful())
+            return Response::externalBinError($process->getOutput());
+        else
+            return Response::externalBinSuccess($process->getOutput());
     }
 }
