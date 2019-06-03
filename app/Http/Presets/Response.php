@@ -6,13 +6,13 @@ class Response
 {
     public const UNAUTHORIZED = [
         'errors' => [
-            ['message' => 'You are not authorized to access this resource.']
+            ['message' => 'You are not authorized to access this resource.'],
         ]
     ];
 
     public const SERVER_ERROR = [
         'errors' => [
-            ['message' => 'There was an error processing your request.']
+            ['message' => 'There was an error processing your request.'],
         ]
     ];
 }

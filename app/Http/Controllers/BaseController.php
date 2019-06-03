@@ -6,12 +6,10 @@ use App\Http\Presets\Status;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Lumen\Routing\Controller;
 
-
 class BaseController extends Controller
 {
     /**
      * Generate the json headers
-     *
      */
     protected function getHeaders()
     {
